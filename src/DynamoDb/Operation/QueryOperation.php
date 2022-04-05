@@ -107,6 +107,16 @@ final class QueryOperation extends AbstractSearchOperation
         return $this;
     }
 
+    public function setSortKeyBetweenConditionExpression(string $keyName, $start, $end): QueryOperation
+    {
+        $conditionExpression = sprintf('%s BETWEEN :start AND :end', $keyName);
+        $this->expressionAttributeValues[':start'] = $start;
+        $this->expressionAttributeValues[':end'] = $end;
+        $this->keyConditionExpression .= ' AND ' . $conditionExpression;
+
+        return $this;
+    }
+
     /**
      * Registers the ScanIndexForward value with this object.
      *
